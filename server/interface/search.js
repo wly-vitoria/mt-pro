@@ -89,60 +89,61 @@ router.get('/hotPlace', async (ctx) => {
 
 // 获取首页最下方部分 artistic.vue 有图有文字 由于要求线上数据 这里不使用接口 直接写假数据做简单展示
 //-------------------------------------------
-// router.get('/resultsByKeywords', async (ctx) => {
-//   const {city, keyword} = ctx.query;
-//   let {
-//     status,
-//     data: {
-//       count,
-//       pois
-//     }
-//   } = await axios.get('http://cp-tools.cn/search/resultsByKeywords', {
-//     params: {
-//       city,
-//       keyword,
-//       sign
-//     }
-//   })
-//   ctx.body = {
-//     count: status === 200 ? count : 0,
-//     pois: status === 200
-//       ? pois
-//       : []
-//   }
-// })
-
-
-//------------------------------------------------------------
-router.get('/products', async (ctx) => {
-  let keyword = ctx.query.keyword || '丽人'
-  let city = ctx.query.city || '三亚'
+router.get('/resultsByKeywords', async (ctx) => {
+  const {city, keyword} = ctx.query; //解构赋值
   let {
     status,
     data: {
-      product,
-      more
+      count,
+      pois
     }
-  } = await axios.get('http://cp-tools.cn/search/products', {
+  } = await axios.get('http://cp-tools.cn/search/resultsByKeywords', {
     params: {
-      keyword,
       city,
+      keyword,
       sign
     }
   })
-  if (status === 200) {
-    ctx.body = {
-      product,
-      more: ctx.isAuthenticated() ? more: [],
-      login: ctx.isAuthenticated()
-    }
-  }else{
-    ctx.body = {
-      product: {},
-      more: ctx.isAuthenticated() ? more: [],
-      login: ctx.isAuthenticated()
-    }
+  ctx.body = {
+    count: status === 200 ? count : 0,
+    pois: status === 200
+      ? pois
+      : []
   }
+})
+
+//这是详情页的接口
+//------------------------------------------------------------
+router.get('/products', async (ctx) => {
+
+
+  //访问线上数据
+  // let {
+  //   status,
+  //   data: {
+  //     product,
+  //     more
+  //   }
+  // } = await axios.get('http://cp-tools.cn/search/products', {
+  //   params: {
+  //     keyword,
+  //     city,
+  //     sign
+  //   }
+  // })
+  // if (status === 200) {
+  //   ctx.body = {
+  //     product,
+  //     more: ctx.isAuthenticated() ? more: [],
+  //     login: ctx.isAuthenticated()
+  //   }
+  // }else{
+  //   ctx.body = {
+  //     product: {},
+  //     more: ctx.isAuthenticated() ? more: [], //判断是否登录
+  //     login: ctx.isAuthenticated()
+  //   }
+  // }
 })
 
 export default router

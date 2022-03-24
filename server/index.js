@@ -21,6 +21,7 @@ import passport from './interface/utils/passport.js'
 import users from './interface/users.js'
 import geo from './interface/geo.js'
 import search from './interface/search.js'
+import category from './interface/category.js'
 
 
 const app = new Koa()
@@ -65,6 +66,7 @@ async function start () {
   app.use(users.routes()).use(users.allowedMethods())
   app.use(geo.routes()).use(geo.allowedMethods())
   app.use(search.routes()).use(search.allowedMethods()) 
+  app.use(category.routes()).use(category.allowedMethods())
 
   app.use((ctx) => {
     ctx.status = 200

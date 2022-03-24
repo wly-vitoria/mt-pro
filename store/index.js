@@ -1,4 +1,4 @@
-import axios from '../server/interface/utils/axios'
+// import axios from '../server/interface/utils/axios'
 export  const actions={
     async nuxtServerInit({
       commit
